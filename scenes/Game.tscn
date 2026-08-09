@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://wv6d8dsqneyr"]
+
+[ext_resource type="PackedScene" uid="uid://cfp7m2bwpv0r0" path="res://scenes/Player.tscn" id="1_ibkli"]
+[ext_resource type="PackedScene" uid="uid://cjgdywg1pdxly" path="res://scenes/Enemy.tscn" id="2_qbsmt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4f3oj"]
+size = Vector2(1000, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibkli"]
+size = Vector2(20, 550)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qbsmt"]
+size = Vector2(20, 550)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vjdka"]
+size = Vector2(500, 20)
+
+[node name="Game" type="Node2D" unique_id=440709642]
+
+[node name="Player" parent="." unique_id=1373821281 instance=ExtResource("1_ibkli")]
+position = Vector2(169, 150)
+
+[node name="TopWall" type="StaticBody2D" parent="." unique_id=849837723]
+position = Vector2(576, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=1563088275]
+shape = SubResource("RectangleShape2D_4f3oj")
+
+[node name="BottomWall" type="StaticBody2D" parent="." unique_id=39009887]
+position = Vector2(576, 598)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=1900400021]
+shape = SubResource("RectangleShape2D_4f3oj")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1663402705]
+position = Vector2(50, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1888093043]
+shape = SubResource("RectangleShape2D_ibkli")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1774293988]
+position = Vector2(1102, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=273023179]
+shape = SubResource("RectangleShape2D_qbsmt")
+
+[node name="MiddleWall" type="StaticBody2D" parent="." unique_id=1023807831]
+position = Vector2(550, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MiddleWall" unique_id=2051544306]
+shape = SubResource("RectangleShape2D_vjdka")
+
+[node name="Enemy" parent="." unique_id=2020645317 instance=ExtResource("2_qbsmt")]
+position = Vector2(983, 500)
