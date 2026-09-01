@@ -8,6 +8,9 @@ func _ready():
 
 func _physics_process(delta):
 	if player:
+		if player.is_dead:
+			velocity = Vector2.ZERO
+			return
 		var direction = global_position.direction_to(player.global_position)
 
 		velocity = direction * speed
