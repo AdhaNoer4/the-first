@@ -3,6 +3,7 @@ extends CanvasLayer
 
 @onready var health_label = $HealthLabel
 @onready var game_over_label = $GameOverLabel
+@onready var restart_button = $RestartButton
 @onready var player = get_tree().get_first_node_in_group("player")
 
 func _process(delta):
@@ -10,3 +11,8 @@ func _process(delta):
 		health_label.text = "HP: " + str(player.health)
 		if player.health <= 0:
 			game_over_label.visible = true
+			restart_button.visible = true
+
+
+func _on_restart_button_pressed() -> void:
+	get_tree().reload_current_scene()
