@@ -48,3 +48,10 @@ func start_invincibility():
 	
 func _on_invincibility_timer_timeout() -> void:
 	is_invincible = false
+
+func _input(event):
+	if event.is_action_pressed("ui_accept"):
+		var enemies = get_tree().get_nodes_in_group("enemy")
+
+		for enemy in enemies:
+			enemy.take_damage(1)
