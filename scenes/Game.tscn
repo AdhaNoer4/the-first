@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cfp7m2bwpv0r0" path="res://scenes/Player.tscn" id="1_ibkli"]
 [ext_resource type="PackedScene" uid="uid://cjgdywg1pdxly" path="res://scenes/Enemy.tscn" id="2_qbsmt"]
 [ext_resource type="Script" uid="uid://doubcqeaf8381" path="res://scenes/ui.gd" id="3_cpr0p"]
+[ext_resource type="Script" uid="uid://cldjlr0iak7sl" path="res://scenes/enemy_spawner.gd" id="4_78awf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4f3oj"]
 size = Vector2(1000, 20)
@@ -21,7 +22,7 @@ size = Vector2(500, 20)
 script = ExtResource("1_78awf")
 
 [node name="Player" parent="." unique_id=1373821281 instance=ExtResource("1_ibkli")]
-position = Vector2(169, 150)
+position = Vector2(555, 388)
 
 [node name="TopWall" type="StaticBody2D" parent="." unique_id=849837723]
 position = Vector2(576, 50)
@@ -52,9 +53,6 @@ position = Vector2(550, 250)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MiddleWall" unique_id=2051544306]
 shape = SubResource("RectangleShape2D_vjdka")
-
-[node name="Enemy" parent="." unique_id=2020645317 instance=ExtResource("2_qbsmt")]
-position = Vector2(983, 500)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2038243939]
 script = ExtResource("3_cpr0p")
@@ -104,5 +102,25 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
+
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=1856192007]
+script = ExtResource("4_78awf")
+enemy_scene = ExtResource("2_qbsmt")
+
+[node name="SpawnTimer" type="Timer" parent="EnemySpawner" unique_id=53044084]
+wait_time = 2.0
+autostart = true
+
+[node name="SpawnPoint1" type="Marker2D" parent="EnemySpawner" unique_id=254678682]
+position = Vector2(107, 115)
+
+[node name="SpawnPoint2" type="Marker2D" parent="EnemySpawner" unique_id=1164133118]
+position = Vector2(1060, 100)
+
+[node name="SpawnPoint3" type="Marker2D" parent="EnemySpawner" unique_id=1601656887]
+position = Vector2(107, 545)
+
+[node name="SpawnPoint4" type="Marker2D" parent="EnemySpawner" unique_id=21255174]
+position = Vector2(1046, 545)
 
 [connection signal="pressed" from="UI/RestartButton" to="UI" method="_on_restart_button_pressed"]
