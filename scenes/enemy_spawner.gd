@@ -8,11 +8,18 @@ extends Node2D
 	$SpawnPoint4
 ]
 var spawn_interval = 2.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$SpawnTimer.timeout.connect(spawn_enemy)
 
 func spawn_enemy():
+	var player = get_tree().get_first_node_in_group("player")
+
+	if player and player.is_dead:
+		$SpawnTimer.stop()
+		return
+		
 	var enemy = enemy_scene.instantiate()
 	var spawn_point = spawn_points.pick_random()
 
