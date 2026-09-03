@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var enemy_scene: PackedScene
+@export var max_enemies = 3
 @onready var spawn_points = [
 	$SpawnPoint1,
 	$SpawnPoint2,
@@ -18,6 +19,11 @@ func spawn_enemy():
 
 	if player and player.is_dead:
 		$SpawnTimer.stop()
+		return
+	
+	var current_enemies = get_tree().get_nodes_in_group("enemy").size()
+
+	if current_enemies >= max_enemies:
 		return
 		
 	var enemy = enemy_scene.instantiate()
