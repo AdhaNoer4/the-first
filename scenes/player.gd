@@ -1,10 +1,14 @@
 extends CharacterBody2D
 
-var speed = 300.0
+@export var projectile_scene: PackedScene
+@export var speed = 200.0
+
 var max_health = 3
 var health = max_health
 var is_dead = false
 var is_invincible = false
+
+var last_direction = Vector2.RIGHT
 
 func _physics_process(delta):
 	if is_dead:
@@ -14,6 +18,9 @@ func _physics_process(delta):
 	"move_right",
 	"move_up",
 	"move_down")
+	
+	if direction != Vector2.ZERO:
+		last_direction = direction
 	
 	velocity = direction * speed
 	
@@ -50,8 +57,19 @@ func _on_invincibility_timer_timeout() -> void:
 	is_invincible = false
 
 func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		var enemies = get_tree().get_nodes_in_group("enemy")
+	if event.is_action_pressed("shoot"):
+		shoot()
+		#var enemies = get_tree().get_nodes_in_group("enemy")
+#
+		#for enemy in enemies:
+			#enemy.take_damage(1)
+	
+		
+func shoot():
+	var projectile = projectile_scene.instantiate()
 
-		for enemy in enemies:
-			enemy.take_damage(1)
+	projectile.global_position = global_position
+	projectile.direction = last_direction
+	
+	get_parent().add_child(projectile)
+	

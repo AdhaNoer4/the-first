@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cgfdfhdsedava"]
+
+[ext_resource type="Script" uid="uid://brgdlkx7r7si0" path="res://projectile.gd" id="1_dprbf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4f3oj"]
+radius = 5.0
+
+[node name="Projectile" type="Area2D" unique_id=199053053]
+script = ExtResource("1_dprbf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1719917893]
+shape = SubResource("CircleShape2D_4f3oj")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1505665897]
+position = Vector2(-13.09758, -4.649601)
+scale = Vector2(0.8646381, 0.8529427)
+polygon = PackedVector2Array(15.179619, -0.61763, 8.240295, 7.5892525, 15.179619, 16.968542, 23.27549, 7.5892525)
+uv = PackedVector2Array(-104.759705, -42.61763, -109.759705, -34.61763, -104.759705, -31.61763, -96.759705, -36.61763)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
