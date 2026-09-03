@@ -1,4 +1,5 @@
 extends CharacterBody2D
+signal died
 
 var speed = 100.0
 var player: Node2D
@@ -7,6 +8,7 @@ var health = max_health
 @onready var game = get_tree().current_scene
 
 func _ready():
+	print("Enemy dibuat")
 	player = get_tree().get_first_node_in_group("player")
 
 func _physics_process(delta):
@@ -32,4 +34,6 @@ func take_damage(amount):
 func die():
 	game.add_score(10)
 	print("Enemy mati!")
+	
+	died.emit()
 	queue_free()

@@ -10,6 +10,7 @@ extends Node2D
 	$SpawnPoint4
 ]
 var spawn_interval = 2.0
+var enemy_count = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,9 +23,7 @@ func spawn_enemy():
 		$SpawnTimer.stop()
 		return
 
-	var current_enemies = get_tree().get_nodes_in_group("enemy").size()
-
-	if current_enemies >= max_enemies:
+	if enemy_count >= max_enemies:
 		return
 
 	var spawn_point = get_valid_spawn_point(player)
@@ -37,7 +36,10 @@ func spawn_enemy():
 	enemy.global_position = spawn_point.global_position
 
 	add_child(enemy)
-
+	enemy.died.connect(_on_enemy_died)
+	enemy_count += 1
+	print("Enemy Spawned. Count:", enemy_count)
+	
 	spawn_interval -= 0.05
 	spawn_interval = max(spawn_interval, 0.5)
 
@@ -55,3 +57,7 @@ func get_valid_spawn_point(player):
 			return spawn_point
 
 	return null
+
+func _on_enemy_died():
+	enemy_count -= 1
+	print("Enemy Died. Count:", enemy_count)
