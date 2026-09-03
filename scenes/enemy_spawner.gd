@@ -2,6 +2,7 @@ extends Node2D
 
 @export var enemy_scene: PackedScene
 @export var max_enemies = 3
+@export var min_spawn_distance = 200.0
 @onready var spawn_points = [
 	$SpawnPoint1,
 	$SpawnPoint2,
@@ -20,18 +21,37 @@ func spawn_enemy():
 	if player and player.is_dead:
 		$SpawnTimer.stop()
 		return
-	
+
 	var current_enemies = get_tree().get_nodes_in_group("enemy").size()
 
 	if current_enemies >= max_enemies:
 		return
-		
-	var enemy = enemy_scene.instantiate()
-	var spawn_point = spawn_points.pick_random()
 
-	enemy.position = spawn_point.position
+	var spawn_point = get_valid_spawn_point(player)
+
+	if spawn_point == null:
+		return
+
+	var enemy = enemy_scene.instantiate()
+
+	enemy.global_position = spawn_point.global_position
+
 	add_child(enemy)
+
 	spawn_interval -= 0.05
 	spawn_interval = max(spawn_interval, 0.5)
 
 	$SpawnTimer.wait_time = spawn_interval
+	
+func get_valid_spawn_point(player):
+	var available_points = spawn_points.duplicate()
+
+	available_points.shuffle()
+
+	for spawn_point in available_points:
+		var distance = spawn_point.global_position.distance_to(player.global_position)
+
+		if distance >= min_spawn_distance:
+			return spawn_point
+
+	return null
