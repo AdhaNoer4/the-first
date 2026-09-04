@@ -77,6 +77,8 @@ func _input(event):
 	
 		
 func shoot():
+	if is_dead:
+		return
 	if not $ShootCooldownTimer.is_stopped():
 		return
 		
