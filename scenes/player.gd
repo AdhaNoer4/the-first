@@ -77,12 +77,17 @@ func _input(event):
 	
 		
 func shoot():
+	if not $ShootCooldownTimer.is_stopped():
+		return
+		
 	var projectile = projectile_scene.instantiate()
 
 	projectile.global_position = global_position
 	projectile.direction = last_direction
 	
 	get_parent().add_child(projectile)
+	
+	$ShootCooldownTimer.start()
 	
 func blink():
 	if is_invincible:

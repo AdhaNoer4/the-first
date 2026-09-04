@@ -17,4 +17,8 @@ scale = Vector2(0.8646381, 0.8529427)
 polygon = PackedVector2Array(15.179619, -0.61763, 8.240295, 7.5892525, 15.179619, 16.968542, 23.27549, 7.5892525)
 uv = PackedVector2Array(-104.759705, -42.61763, -109.759705, -34.61763, -104.759705, -31.61763, -96.759705, -36.61763)
 
+[node name="LifetimeTimer" type="Timer" parent="." unique_id=856528449]
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]
