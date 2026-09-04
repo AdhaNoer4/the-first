@@ -27,18 +27,26 @@ func _physics_process(delta):
 	move_and_slide()
 
 func take_damage(amount):
-	if is_dead or is_invincible:
+	if is_dead:
 		return
-		
+
+	if is_invincible:
+		return
+
 	health -= amount
-	health = clamp(health, 0, max_health)
-	
+
+	if health < 0:
+		health = 0
+
 	print("Player HP:", health)
-	
+
 	if health <= 0:
 		die()
-	else:
-		start_invincibility()
+		return
+
+	is_invincible = true
+	$InvincibilityTimer.start()
+	$BlinkTimer.start()
 		
 func _on_damage_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
@@ -55,6 +63,9 @@ func start_invincibility():
 	
 func _on_invincibility_timer_timeout() -> void:
 	is_invincible = false
+
+	$BlinkTimer.stop()
+	modulate.a = 1.0
 
 func _input(event):
 	if event.is_action_pressed("shoot"):
@@ -73,3 +84,13 @@ func shoot():
 	
 	get_parent().add_child(projectile)
 	
+func blink():
+	if is_invincible:
+		modulate.a = 0.3
+	else:
+		modulate.a = 1.0
+
+
+func _on_blink_timer_timeout() -> void:
+	if is_invincible:
+		modulate.a = 0.3 if modulate.a == 1.0 else 1.0

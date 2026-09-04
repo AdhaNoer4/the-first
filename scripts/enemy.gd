@@ -26,6 +26,7 @@ func take_damage(amount):
 	health -= amount
 	health = clamp(health, 0, max_health)
 
+	hit_flash()
 	print("Enemy HP:", health)
 
 	if health <= 0:
@@ -37,3 +38,11 @@ func die():
 	
 	died.emit()
 	queue_free()
+
+func hit_flash():
+	modulate = Color(1, 0.3, 0.3)
+	$HitFlashTimer.start()
+
+
+func _on_hit_flash_timer_timeout() -> void:
+	modulate = Color(1, 1, 1)

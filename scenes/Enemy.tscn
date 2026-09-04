@@ -15,3 +15,9 @@ texture = ExtResource("1_3gvst")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1170159241]
 position = Vector2(1, -0.5)
 shape = SubResource("RectangleShape2D_4f3oj")
+
+[node name="HitFlashTimer" type="Timer" parent="." unique_id=2048199384]
+wait_time = 0.08
+one_shot = true
+
+[connection signal="timeout" from="HitFlashTimer" to="." method="_on_hit_flash_timer_timeout"]
