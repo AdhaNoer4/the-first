@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal health_changed
+signal player_died
+
 @export var projectile_scene: PackedScene
 @export var speed = 200.0
 
@@ -37,6 +40,8 @@ func take_damage(amount):
 
 	if health < 0:
 		health = 0
+		
+	health_changed.emit(health)
 
 	print("Player HP:", health)
 
@@ -55,6 +60,7 @@ func _on_damage_area_body_entered(body: Node2D) -> void:
 func die():
 	is_dead = true
 	velocity = Vector2.ZERO
+	player_died.emit()
 	print("Player mati!")
 
 func start_invincibility():
