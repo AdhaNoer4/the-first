@@ -4,8 +4,8 @@ extends Node2D
 @onready var health_label = $UI/HealthLabel
 @onready var health_bar = $UI/HealthBar
 @onready var score_label = $UI/ScoreLabel
-@onready var restart_button = $UI/RestartButton
-@onready var game_over_label = $UI/GameOverLabel
+@onready var restart_button = $UI/GameOverContainer/GameOverBox/RestartButton
+@onready var game_over_label = $UI/GameOverContainer/GameOverBox/GameOverLabel
 
 var score = 0
 
