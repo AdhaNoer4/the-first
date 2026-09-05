@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var player = $Player
 @onready var health_label = $UI/HealthLabel
+@onready var health_bar = $UI/HealthBar
 @onready var score_label = $UI/ScoreLabel
 @onready var restart_button = $UI/RestartButton
 @onready var game_over_label = $UI/GameOverLabel
@@ -32,15 +33,16 @@ func add_score(amount):
 
 func update_health(value):
 	health_label.text = "HP: " + str(value)
-
+	health_bar.value = value
 
 func update_score():
-	score_label.text = "SCORE: " + str(score)
+	score_label.text = "SCORE: " + str(score).pad_zeros(4)
 
 
 func restart_game():
 	get_tree().reload_current_scene()
 
 func show_game_over():
+	game_over_label.text = "GAME OVER\nSCORE: " + str(score)
 	game_over_label.visible = true
 	restart_button.visible = true
