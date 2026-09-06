@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cjgdywg1pdxly"]
 
-[ext_resource type="Texture2D" uid="uid://bgoolbgfbse17" path="res://icon.svg" id="1_3gvst"]
 [ext_resource type="Script" uid="uid://cs0vttpowfsbc" path="res://scripts/enemy.gd" id="1_55jtl"]
+[ext_resource type="Texture2D" uid="uid://d1bhek56gqhq5" path="res://mob.png" id="2_55jtl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4f3oj"]
 size = Vector2(116, 119)
@@ -10,7 +10,9 @@ size = Vector2(116, 119)
 script = ExtResource("1_55jtl")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=571988542]
-texture = ExtResource("1_3gvst")
+position = Vector2(1.9999981, 3.9999695)
+scale = Vector2(0.11067704, 0.10546876)
+texture = ExtResource("2_55jtl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1170159241]
 position = Vector2(1, -0.5)

@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var enemy_scene: PackedScene
+@export var fast_enemy_chance = 0.3
+@export var tank_enemy_chance = 0.2
 @export var max_enemies = 3
 @export var min_spawn_distance = 200.0
 @onready var spawn_points = [
@@ -32,7 +34,30 @@ func spawn_enemy():
 		return
 
 	var enemy = enemy_scene.instantiate()
+	
+	var random_type = randf()
 
+	if random_type < tank_enemy_chance:
+		enemy.max_health = 5
+		enemy.health = enemy.max_health
+		enemy.speed = 60.0
+		enemy.set_enemy_type("tank")
+		print("TANK ENEMY SPAWNED")
+
+	elif random_type < tank_enemy_chance + fast_enemy_chance:
+		enemy.max_health = 1
+		enemy.health = enemy.max_health
+		enemy.speed = 180.0
+		enemy.set_enemy_type("fast")
+		print("FAST ENEMY SPAWNED")
+
+	else:
+		enemy.max_health = 1
+		enemy.health = enemy.max_health
+		enemy.speed = 100.0
+		enemy.set_enemy_type("normal")
+		print("NORMAL ENEMY SPAWNED")
+		
 	enemy.global_position = spawn_point.global_position
 
 	add_child(enemy)

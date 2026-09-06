@@ -1,10 +1,12 @@
 extends CharacterBody2D
 signal died
 
-var speed = 100.0
-var player: Node2D
-var max_health = 3
+@export var speed = 100.0
+@export var max_health = 1
+
 var health = max_health
+var player: Node2D
+
 @onready var game = get_tree().current_scene
 
 func _ready():
@@ -46,3 +48,16 @@ func hit_flash():
 
 func _on_hit_flash_timer_timeout() -> void:
 	modulate = Color(1, 1, 1)
+
+func set_enemy_type(type):
+	if type == "tank":
+		scale = Vector2(1.4, 1.4)
+		modulate = Color(1, 0.4, 0.4)
+
+	elif type == "fast":
+		scale = Vector2(0.75, 0.75)
+		modulate = Color(0.4, 0.7, 1.0)
+
+	else:
+		scale = Vector2(1, 1)
+		modulate = Color(1, 1, 1)
