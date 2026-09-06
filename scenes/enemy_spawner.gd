@@ -86,3 +86,22 @@ func get_valid_spawn_point(player):
 func _on_enemy_died():
 	enemy_count -= 1
 	print("Enemy Died. Count:", enemy_count)
+
+func increase_difficulty(wave):
+	spawn_interval = max(2.0 - ((wave - 1) * 0.2), 0.5)
+	$SpawnTimer.wait_time = spawn_interval
+	
+	print("Difficulty meningkat!")
+	print("Wave:", wave)
+	print("Spawn Interval:", spawn_interval)
+
+func increase_max_enemies(wave):
+	max_enemies = 2 + wave
+	print("Max Enemy:", max_enemies)
+
+func increase_enemy_chances(wave):
+	fast_enemy_chance = min(0.3 + ((wave - 1) * 0.05), 0.5)
+	tank_enemy_chance = min(0.2 + ((wave - 1) * 0.05), 0.4)
+
+	print("Fast Chance:", fast_enemy_chance)
+	print("Tank Chance:", tank_enemy_chance)

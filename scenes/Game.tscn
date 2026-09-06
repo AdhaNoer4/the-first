@@ -129,6 +129,18 @@ custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "RESTART	"
 
+[node name="WaveLabel" type="Label" parent="UI" unique_id=1371587199]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.5
+offset_top = 20.0
+offset_right = 31.5
+offset_bottom = 43.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "WAVE: 1"
+
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=1856192007]
 script = ExtResource("4_78awf")
 enemy_scene = ExtResource("2_qbsmt")
@@ -148,3 +160,7 @@ position = Vector2(107, 545)
 
 [node name="SpawnPoint4" type="Marker2D" parent="EnemySpawner" unique_id=21255174]
 position = Vector2(1046, 545)
+
+[node name="WaveTimer" type="Timer" parent="." unique_id=257212257]
+wait_time = 15.0
+autostart = true
