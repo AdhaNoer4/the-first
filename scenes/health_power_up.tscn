@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cnyk8jucx8vd8"]
+
+[ext_resource type="Script" uid="uid://csdiedxs0m4td" path="res://scenes/health_power_up.gd" id="1_15ry2"]
+[ext_resource type="Texture2D" uid="uid://n5vg3a6ksshh" path="res://heart-svgrepo-com.svg" id="2_onsuo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4f3oj"]
+radius = 20.0
+
+[node name="HealthPowerUp" type="Area2D" unique_id=1898607183]
+script = ExtResource("1_15ry2")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1887751465]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_onsuo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=615900987]
+shape = SubResource("CircleShape2D_4f3oj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

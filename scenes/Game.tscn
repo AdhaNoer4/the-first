@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cfp7m2bwpv0r0" path="res://scenes/Player.tscn" id="1_ibkli"]
 [ext_resource type="PackedScene" uid="uid://cjgdywg1pdxly" path="res://scenes/Enemy.tscn" id="2_qbsmt"]
 [ext_resource type="Script" uid="uid://cldjlr0iak7sl" path="res://scenes/enemy_spawner.gd" id="4_78awf"]
+[ext_resource type="Script" uid="uid://dhmooyd7a1pd4" path="res://scenes/power_up_spawner.gd" id="5_s0nni"]
+[ext_resource type="PackedScene" uid="uid://cnyk8jucx8vd8" path="res://scenes/health_power_up.tscn" id="6_aug50"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4f3oj"]
 size = Vector2(1000, 20)
@@ -164,3 +166,23 @@ position = Vector2(1046, 545)
 [node name="WaveTimer" type="Timer" parent="." unique_id=257212257]
 wait_time = 15.0
 autostart = true
+
+[node name="PowerUpSpawner" type="Node2D" parent="." unique_id=1614123619]
+script = ExtResource("5_s0nni")
+health_power_up_scene = ExtResource("6_aug50")
+
+[node name="SpawnTimer" type="Timer" parent="PowerUpSpawner" unique_id=1727343012]
+wait_time = 10.0
+autostart = true
+
+[node name="SpawnPoint1" type="Marker2D" parent="PowerUpSpawner" unique_id=2052706954]
+position = Vector2(552, 545)
+
+[node name="SpawnPoint2" type="Marker2D" parent="PowerUpSpawner" unique_id=633805668]
+position = Vector2(112, 329)
+
+[node name="SpawnPoint3" type="Marker2D" parent="PowerUpSpawner" unique_id=944356297]
+position = Vector2(1021, 326)
+
+[node name="SpawnPoint4" type="Marker2D" parent="PowerUpSpawner" unique_id=1218791054]
+position = Vector2(566, 108)

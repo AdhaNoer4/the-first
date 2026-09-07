@@ -107,3 +107,14 @@ func blink():
 func _on_blink_timer_timeout() -> void:
 	if is_invincible:
 		modulate.a = 0.3 if modulate.a == 1.0 else 1.0
+
+func heal(amount):
+	if is_dead:
+		return
+
+	health += amount
+	health = min(health, max_health)
+
+	health_changed.emit(health)
+
+	print("Player healed! HP:", health)
