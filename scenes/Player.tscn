@@ -14,6 +14,7 @@ radius = 89.94
 [node name="Player" type="CharacterBody2D" unique_id=1373821281 groups=["player"]]
 script = ExtResource("1_v6fml")
 projectile_scene = ExtResource("2_mdl7e")
+shoot_sound = ExtResource("4_mdl7e")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=730799750]
 texture = ExtResource("2_3li8b")
@@ -37,9 +38,6 @@ wait_time = 0.1
 [node name="ShootCooldownTimer" type="Timer" parent="." unique_id=1046238447]
 wait_time = 0.25
 one_shot = true
-
-[node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=1121918253]
-stream = ExtResource("4_mdl7e")
 
 [connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var game_over_sound: AudioStream
+
 @onready var player = $Player
 @onready var health_label = $UI/HealthLabel
 @onready var health_bar = $UI/HealthBar
@@ -26,6 +28,7 @@ func _ready():
 	update_wave()
 	
 	print("WAVE:", wave)
+	print(AudioManager)
 
 func add_score(amount):
 	score += amount
@@ -33,7 +36,6 @@ func add_score(amount):
 	update_score()
 
 	print("Score:", score)
-
 
 func update_health(value):
 	health_label.text = "HP: " + str(value)
@@ -62,3 +64,4 @@ func show_game_over():
 	game_over_label.text = "GAME OVER\nSCORE: " + str(score)
 	game_over_label.visible = true
 	restart_button.visible = true
+	AudioManager.play_sound(game_over_sound)

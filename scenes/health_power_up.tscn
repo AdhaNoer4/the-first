@@ -9,6 +9,7 @@ radius = 20.0
 
 [node name="HealthPowerUp" type="Area2D" unique_id=1898607183]
 script = ExtResource("1_15ry2")
+pickup_sound = ExtResource("3_x5jg1")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1887751465]
 scale = Vector2(0.05, 0.05)
@@ -16,8 +17,5 @@ texture = ExtResource("2_onsuo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=615900987]
 shape = SubResource("CircleShape2D_4f3oj")
-
-[node name="PickupSound" type="AudioStreamPlayer" parent="." unique_id=164407521]
-stream = ExtResource("3_x5jg1")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

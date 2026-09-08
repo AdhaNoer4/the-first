@@ -4,6 +4,7 @@ signal health_changed
 signal player_died
 
 @export var projectile_scene: PackedScene
+@export var shoot_sound: AudioStream
 @export var speed = 200.0
 var normal_speed = speed
 
@@ -91,7 +92,8 @@ func shoot():
 	if not $ShootCooldownTimer.is_stopped():
 		return
 		
-	$ShootSound.play()
+	AudioManager.play_sound(shoot_sound)
+	
 	var projectile = projectile_scene.instantiate()
 
 	projectile.global_position = global_position

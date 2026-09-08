@@ -2,6 +2,8 @@ extends Area2D
 
 signal picked_up
 
+@export var pickup_sound: AudioStream
+
 var start_position: Vector2
 var time := 0.0
 
@@ -24,7 +26,7 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.heal(1)
-		$PickupSound.play()
+		AudioManager.play_sound(pickup_sound)
 		picked_up.emit()
 		await get_tree().create_timer(0.2).timeout
 		queue_free()

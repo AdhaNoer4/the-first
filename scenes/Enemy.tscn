@@ -10,6 +10,8 @@ size = Vector2(116, 119)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=2020645317 groups=["enemy"]]
 script = ExtResource("1_55jtl")
+hit_sound = ExtResource("3_mpr68")
+death_sound = ExtResource("4_ft8do")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=571988542]
 position = Vector2(1.9999981, 3.9999695)
@@ -23,11 +25,5 @@ shape = SubResource("RectangleShape2D_4f3oj")
 [node name="HitFlashTimer" type="Timer" parent="." unique_id=2048199384]
 wait_time = 0.08
 one_shot = true
-
-[node name="HitSound" type="AudioStreamPlayer" parent="." unique_id=1169518657]
-stream = ExtResource("3_mpr68")
-
-[node name="DeathSound" type="AudioStreamPlayer" parent="." unique_id=1395831496]
-stream = ExtResource("4_ft8do")
 
 [connection signal="timeout" from="HitFlashTimer" to="." method="_on_hit_flash_timer_timeout"]

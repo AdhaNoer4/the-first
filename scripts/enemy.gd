@@ -4,6 +4,9 @@ signal died
 @export var speed = 100.0
 @export var max_health = 1
 
+@export var hit_sound: AudioStream
+@export var death_sound: AudioStream
+
 var health = max_health
 var player: Node2D
 
@@ -28,7 +31,7 @@ func take_damage(amount):
 	health -= amount
 	health = clamp(health, 0, max_health)
 
-	$HitSound.play()
+	AudioManager.play_sound(hit_sound)
 	hit_flash()
 	print("Enemy HP:", health)
 
@@ -39,7 +42,7 @@ func die():
 	game.add_score(10)
 	print("Enemy mati!")
 	
-	$DeathSound.play()
+	AudioManager.play_sound(death_sound)
 	
 	died.emit()
 	await get_tree().create_timer(0.2).timeout

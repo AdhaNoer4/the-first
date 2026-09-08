@@ -9,6 +9,7 @@ radius = 20.0
 
 [node name="SpeedPowerUp" type="Area2D" unique_id=1714229473]
 script = ExtResource("1_s7ujk")
+pickup_sound = ExtResource("3_a3hdq")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1495133239]
 scale = Vector2(0.05, 0.05)
@@ -16,8 +17,5 @@ texture = ExtResource("1_ipmxq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1805724827]
 shape = SubResource("CircleShape2D_4f3oj")
-
-[node name="PickupSound" type="AudioStreamPlayer" parent="." unique_id=1352163818]
-stream = ExtResource("3_a3hdq")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
