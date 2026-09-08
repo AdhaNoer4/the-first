@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://csdiedxs0m4td" path="res://scenes/health_power_up.gd" id="1_15ry2"]
 [ext_resource type="Texture2D" uid="uid://n5vg3a6ksshh" path="res://heart-svgrepo-com.svg" id="2_onsuo"]
+[ext_resource type="AudioStream" uid="uid://bi41vr20x0htm" path="res://assets/audio/health_pickup.wav" id="3_x5jg1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4f3oj"]
 radius = 20.0
@@ -15,5 +16,8 @@ texture = ExtResource("2_onsuo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=615900987]
 shape = SubResource("CircleShape2D_4f3oj")
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="." unique_id=164407521]
+stream = ExtResource("3_x5jg1")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -24,5 +24,7 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.heal(1)
+		$PickupSound.play()
 		picked_up.emit()
+		await get_tree().create_timer(0.2).timeout
 		queue_free()

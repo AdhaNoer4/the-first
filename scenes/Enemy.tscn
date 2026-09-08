@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cs0vttpowfsbc" path="res://scripts/enemy.gd" id="1_55jtl"]
 [ext_resource type="Texture2D" uid="uid://d1bhek56gqhq5" path="res://mob.png" id="2_55jtl"]
+[ext_resource type="AudioStream" uid="uid://dwakp1s7u1b1" path="res://assets/audio/tree_monster_hit.wav" id="3_mpr68"]
+[ext_resource type="AudioStream" uid="uid://dai1o6fl51bf0" path="res://assets/audio/tree_monster_death.wav" id="4_ft8do"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4f3oj"]
 size = Vector2(116, 119)
@@ -21,5 +23,11 @@ shape = SubResource("RectangleShape2D_4f3oj")
 [node name="HitFlashTimer" type="Timer" parent="." unique_id=2048199384]
 wait_time = 0.08
 one_shot = true
+
+[node name="HitSound" type="AudioStreamPlayer" parent="." unique_id=1169518657]
+stream = ExtResource("3_mpr68")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="." unique_id=1395831496]
+stream = ExtResource("4_ft8do")
 
 [connection signal="timeout" from="HitFlashTimer" to="." method="_on_hit_flash_timer_timeout"]

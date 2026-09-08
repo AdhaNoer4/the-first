@@ -91,6 +91,7 @@ func shoot():
 	if not $ShootCooldownTimer.is_stopped():
 		return
 		
+	$ShootSound.play()
 	var projectile = projectile_scene.instantiate()
 
 	projectile.global_position = global_position

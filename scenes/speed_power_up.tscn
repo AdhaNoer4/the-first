@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bvvhcssbhes0n" path="res://lightning-svgrepo-com.svg" id="1_ipmxq"]
 [ext_resource type="Script" uid="uid://dok14ieu5cfsf" path="res://scenes/speed_power_up.gd" id="1_s7ujk"]
+[ext_resource type="AudioStream" uid="uid://g02gtrwip154" path="res://assets/audio/speed_up_pickup.wav" id="3_a3hdq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4f3oj"]
 radius = 20.0
@@ -15,5 +16,8 @@ texture = ExtResource("1_ipmxq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1805724827]
 shape = SubResource("CircleShape2D_4f3oj")
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="." unique_id=1352163818]
+stream = ExtResource("3_a3hdq")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

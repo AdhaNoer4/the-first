@@ -28,6 +28,7 @@ func take_damage(amount):
 	health -= amount
 	health = clamp(health, 0, max_health)
 
+	$HitSound.play()
 	hit_flash()
 	print("Enemy HP:", health)
 
@@ -38,7 +39,10 @@ func die():
 	game.add_score(10)
 	print("Enemy mati!")
 	
+	$DeathSound.play()
+	
 	died.emit()
+	await get_tree().create_timer(0.2).timeout
 	queue_free()
 
 func hit_flash():
