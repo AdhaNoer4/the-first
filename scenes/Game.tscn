@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dvip27tf5x1xq" path="res://scenes/game.gd" id="1_78awf"]
 [ext_resource type="PackedScene" uid="uid://cfp7m2bwpv0r0" path="res://scenes/Player.tscn" id="1_ibkli"]
+[ext_resource type="PackedScene" uid="uid://bhwmhnhg017hy" path="res://scenes/speed_power_up.tscn" id="2_kiw3p"]
 [ext_resource type="PackedScene" uid="uid://cjgdywg1pdxly" path="res://scenes/Enemy.tscn" id="2_qbsmt"]
 [ext_resource type="Script" uid="uid://cldjlr0iak7sl" path="res://scenes/enemy_spawner.gd" id="4_78awf"]
 [ext_resource type="Script" uid="uid://dhmooyd7a1pd4" path="res://scenes/power_up_spawner.gd" id="5_s0nni"]
@@ -170,6 +171,7 @@ autostart = true
 [node name="PowerUpSpawner" type="Node2D" parent="." unique_id=1614123619]
 script = ExtResource("5_s0nni")
 health_power_up_scene = ExtResource("6_aug50")
+speed_power_up_scene = ExtResource("2_kiw3p")
 
 [node name="SpawnTimer" type="Timer" parent="PowerUpSpawner" unique_id=1727343012]
 wait_time = 10.0

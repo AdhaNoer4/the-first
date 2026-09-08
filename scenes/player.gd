@@ -5,6 +5,7 @@ signal player_died
 
 @export var projectile_scene: PackedScene
 @export var speed = 200.0
+var normal_speed = speed
 
 var max_health = 3
 var health = max_health
@@ -12,6 +13,9 @@ var is_dead = false
 var is_invincible = false
 
 var last_direction = Vector2.RIGHT
+
+func _ready():
+	pass
 
 func _physics_process(delta):
 	if is_dead:
@@ -81,7 +85,6 @@ func _input(event):
 		#for enemy in enemies:
 			#enemy.take_damage(1)
 	
-		
 func shoot():
 	if is_dead:
 		return
@@ -103,7 +106,6 @@ func blink():
 	else:
 		modulate.a = 1.0
 
-
 func _on_blink_timer_timeout() -> void:
 	if is_invincible:
 		modulate.a = 0.3 if modulate.a == 1.0 else 1.0
@@ -118,3 +120,14 @@ func heal(amount):
 	health_changed.emit(health)
 
 	print("Player healed! HP:", health)
+
+func speed_boost(duration):
+	speed = normal_speed * 2.0
+
+	print("SPEED BOOST AKTIF!")
+
+	await get_tree().create_timer(duration).timeout
+
+	speed = normal_speed
+
+	print("SPEED BOOST SELESAI!")
