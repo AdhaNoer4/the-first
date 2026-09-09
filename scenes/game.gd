@@ -11,6 +11,12 @@ extends Node2D
 @onready var enemy_spawner = $EnemySpawner
 @onready var wave_label = $UI/WaveLabel
 
+@onready var audio_settings = $UI/AudioSettings
+@onready var music_button = $UI/AudioSettings/VBoxContainer/MusicButton
+@onready var sfx_button = $UI/AudioSettings/VBoxContainer/SFXButton
+@onready var audio_settings_button = $UI/AudioSettingsButton
+@onready var close_button = $UI/AudioSettings/VBoxContainer/CloseButton
+
 var score = 0
 var wave = 1
 
@@ -29,6 +35,18 @@ func _ready():
 	
 	print("WAVE:", wave)
 	print(AudioManager)
+	
+	audio_settings_button.pressed.connect(open_audio_settings)
+	close_button.pressed.connect(close_audio_settings)
+	music_button.toggled.connect(toggle_music)
+	sfx_button.toggled.connect(toggle_sfx)
+	
+	audio_settings.visible = false
+	
+	var audio_settings_data = AudioManager.load_audio_settings()
+
+	music_button.button_pressed = audio_settings_data["music_enabled"]
+	sfx_button.button_pressed = audio_settings_data["sfx_enabled"]
 
 func add_score(amount):
 	score += amount
@@ -65,3 +83,25 @@ func show_game_over():
 	game_over_label.visible = true
 	restart_button.visible = true
 	AudioManager.play_sound(game_over_sound)
+
+func open_audio_settings():
+	audio_settings.visible = true
+
+func close_audio_settings():
+	audio_settings.visible = false
+
+func toggle_music(enabled: bool):
+	AudioManager.set_music_enabled(enabled)
+	
+	AudioManager.save_audio_settings(
+		enabled,
+		sfx_button.button_pressed
+	)
+	
+func toggle_sfx(enabled: bool):
+	AudioManager.set_sfx_enabled(enabled)
+	
+	AudioManager.save_audio_settings(
+		music_button.button_pressed,
+		enabled
+	)

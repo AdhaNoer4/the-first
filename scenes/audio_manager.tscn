@@ -5,4 +5,14 @@
 [node name="AudioManager" type="Node" unique_id=2084224321]
 script = ExtResource("1_8qd8g")
 
-[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=475727977]
+[node name="SFXPlayer1" type="AudioStreamPlayer" parent="." unique_id=475727977]
+bus = &"SFX"
+
+[node name="SFXPlayer2" type="AudioStreamPlayer" parent="." unique_id=566535836]
+bus = &"SFX"
+
+[node name="SFXPlayer3" type="AudioStreamPlayer" parent="." unique_id=2125515844]
+bus = &"SFX"
+
+[node name="SFXPlayer4" type="AudioStreamPlayer" parent="." unique_id=1905481745]
+bus = &"SFX"
