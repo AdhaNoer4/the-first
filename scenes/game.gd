@@ -82,6 +82,9 @@ func show_game_over():
 	game_over_label.text = "GAME OVER\nSCORE: " + str(score)
 	game_over_label.visible = true
 	restart_button.visible = true
+	
+	$BGM.stop()
+	
 	AudioManager.play_sound(game_over_sound)
 
 func open_audio_settings():
