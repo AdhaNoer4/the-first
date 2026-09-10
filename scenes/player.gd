@@ -29,9 +29,14 @@ func _physics_process(delta):
 	
 	if direction != Vector2.ZERO:
 		last_direction = direction
-	
+		if $PlayerAnimation.animation != "walk":
+			$PlayerAnimation.play("walk")
+	else:
+		if $PlayerAnimation.animation != "idle":
+			$PlayerAnimation.play("idle")
+		
 	velocity = direction * speed
-	
+		
 	move_and_slide()
 
 func take_damage(amount):
