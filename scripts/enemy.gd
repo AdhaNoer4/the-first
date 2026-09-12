@@ -9,6 +9,7 @@ signal died
 
 var health = max_health
 var player: Node2D
+var base_modulate = Color.WHITE
 
 @onready var game = get_tree().current_scene
 
@@ -49,12 +50,19 @@ func die():
 	queue_free()
 
 func hit_flash():
+	var tween = create_tween()
+	
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	
 	modulate = Color(1, 0.3, 0.3)
-	$HitFlashTimer.start()
-
-
-func _on_hit_flash_timer_timeout() -> void:
-	modulate = Color(1, 1, 1)
+	
+	tween.tween_property(
+		self,
+		"modulate",
+		base_modulate,
+		0.12
+	)
 
 func set_enemy_type(type):
 	if type == "tank":
@@ -68,3 +76,4 @@ func set_enemy_type(type):
 	else:
 		scale = Vector2(1, 1)
 		modulate = Color(1, 1, 1)
+	base_modulate = modulate
