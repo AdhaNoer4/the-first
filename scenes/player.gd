@@ -14,6 +14,7 @@ var is_dead = false
 var is_invincible = false
 
 var last_direction = Vector2.RIGHT
+var facing_direction = Vector2.DOWN
 
 func _ready():
 	pass
@@ -29,11 +30,47 @@ func _physics_process(delta):
 	
 	if direction != Vector2.ZERO:
 		last_direction = direction
-		if $PlayerAnimation.animation != "walk":
-			$PlayerAnimation.play("walk")
+	
+		# Tentukan arah hadap berdasarkan gerakan
+		if abs(direction.x) > abs(direction.y):
+			if direction.x > 0:
+				facing_direction = Vector2.RIGHT
+			else:
+				facing_direction = Vector2.LEFT
+		else:
+			if direction.y > 0:
+				facing_direction = Vector2.DOWN
+			else:
+				facing_direction = Vector2.UP
+		
+		# Mainkan animasi walk sesuai arah
+		if facing_direction == Vector2.UP:
+			if $PlayerAnimation.animation != "walk_up":
+				$PlayerAnimation.play("walk_up")
+		elif facing_direction == Vector2.DOWN:
+			if $PlayerAnimation.animation != "walk_down":
+				$PlayerAnimation.play("walk_down")
+		elif facing_direction == Vector2.LEFT:
+			if $PlayerAnimation.animation != "walk_left":
+				$PlayerAnimation.play("walk_left")
+		elif facing_direction == Vector2.RIGHT:
+			if $PlayerAnimation.animation != "walk_right":
+				$PlayerAnimation.play("walk_right")
+
 	else:
-		if $PlayerAnimation.animation != "idle":
-			$PlayerAnimation.play("idle")
+		# Mainkan animasi idle sesuai arah terakhir
+		if facing_direction == Vector2.UP:
+			if $PlayerAnimation.animation != "idle_up":
+				$PlayerAnimation.play("idle_up")
+		elif facing_direction == Vector2.DOWN:
+			if $PlayerAnimation.animation != "idle_down":
+				$PlayerAnimation.play("idle_down")
+		elif facing_direction == Vector2.LEFT:
+			if $PlayerAnimation.animation != "idle_left":
+				$PlayerAnimation.play("idle_left")
+		elif facing_direction == Vector2.RIGHT:
+			if $PlayerAnimation.animation != "idle_right":
+				$PlayerAnimation.play("idle_right")
 		
 	velocity = direction * speed
 		
