@@ -22,6 +22,8 @@ func _process(delta: float) -> void:
 	var pulse = 1.0 + sin(time * 4.0) * 0.08
 	scale = Vector2(pulse, pulse)
 
+	var glow_pulse = 0.1 + sin(time * 5.0) * 0.15
+	$Glow.scale = Vector2(glow_pulse, glow_pulse)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

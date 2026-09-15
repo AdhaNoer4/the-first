@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bvvhcssbhes0n" path="res://lightning-svgrepo-com.svg" id="1_ipmxq"]
 [ext_resource type="Script" uid="uid://dok14ieu5cfsf" path="res://scenes/speed_power_up.gd" id="1_s7ujk"]
 [ext_resource type="AudioStream" uid="uid://g02gtrwip154" path="res://assets/audio/speed_up_pickup.wav" id="3_a3hdq"]
+[ext_resource type="Texture2D" uid="uid://dk1mn0a3mepmb" path="res://assets/Glow.png" id="3_li3fg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4f3oj"]
 radius = 20.0
@@ -10,6 +11,11 @@ radius = 20.0
 [node name="SpeedPowerUp" type="Area2D" unique_id=1714229473]
 script = ExtResource("1_s7ujk")
 pickup_sound = ExtResource("3_a3hdq")
+
+[node name="Glow" type="Sprite2D" parent="." unique_id=818910189]
+modulate = Color(0, 1, 1, 0.7058824)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_li3fg")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1495133239]
 scale = Vector2(0.05, 0.05)

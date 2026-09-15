@@ -84,7 +84,9 @@ func take_damage(amount):
 		return
 
 	health -= amount
-
+	damage_flash()
+	screen_shake()
+	
 	if health < 0:
 		health = 0
 		
@@ -133,6 +135,12 @@ func shoot():
 		return
 	if not $ShootCooldownTimer.is_stopped():
 		return
+	
+	$MuzzleFlash.position = facing_direction * 25.0
+	$MuzzleFlash.visible = true
+	
+	shoot_recoil()
+
 		
 	AudioManager.play_sound(shoot_sound)
 	
@@ -144,6 +152,9 @@ func shoot():
 	get_parent().add_child(projectile)
 	
 	$ShootCooldownTimer.start()
+	
+	await get_tree().create_timer(0.06).timeout
+	$MuzzleFlash.visible = false
 	
 func blink():
 	if is_invincible:
@@ -176,3 +187,60 @@ func speed_boost(duration):
 	speed = normal_speed
 
 	print("SPEED BOOST SELESAI!")
+
+func damage_flash():
+	var tween = create_tween()
+
+	modulate = Color(1, 0.2, 0.2, 1.0)
+
+	tween.tween_property(
+		self,
+		"modulate",
+		Color(1, 1, 1, 1),
+		0.12
+	)
+
+func screen_shake():
+	var tween = create_tween()
+
+	$Camera2D.offset = Vector2(5, 0)
+
+	tween.tween_property(
+		$Camera2D,
+		"offset",
+		Vector2(-5, 0),
+		0.05
+	)
+
+	tween.tween_property(
+		$Camera2D,
+		"offset",
+		Vector2(5, 0),
+		0.05
+	)
+
+	tween.tween_property(
+		$Camera2D,
+		"offset",
+		Vector2.ZERO,
+		0.05
+	)
+
+func shoot_recoil():
+	var tween = create_tween()
+
+	var recoil_position = -facing_direction * 3.0
+
+	tween.tween_property(
+		self,
+		"position",
+		position + recoil_position,
+		0.04
+	)
+
+	tween.tween_property(
+		self,
+		"position",
+		position,
+		0.06
+	)

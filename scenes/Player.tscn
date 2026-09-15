@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cgfdfhdsedava" path="res://scenes/Projectile.tscn" id="2_mdl7e"]
 [ext_resource type="AudioStream" uid="uid://cdshy3rg6prdj" path="res://assets/audio/shoot.wav" id="4_mdl7e"]
 [ext_resource type="Texture2D" uid="uid://cb3ffwlq8pty0" path="res://assets/player/player_4_direction_centered.png" id="5_qu4a1"]
+[ext_resource type="Texture2D" uid="uid://dk1mn0a3mepmb" path="res://assets/Glow.png" id="6_70d11"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70d11"]
 atlas = ExtResource("5_qu4a1")
@@ -384,6 +385,14 @@ wait_time = 0.1
 [node name="ShootCooldownTimer" type="Timer" parent="." unique_id=1046238447]
 wait_time = 0.25
 one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1314370481]
+
+[node name="MuzzleFlash" type="Sprite2D" parent="." unique_id=164794718]
+visible = false
+position = Vector2(25, 0)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("6_70d11")
 
 [connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

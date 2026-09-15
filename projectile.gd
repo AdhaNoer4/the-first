@@ -21,8 +21,16 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
 		body.take_damage(damage)
+		
+		var knockback_direction = body.global_position - global_position
+		body.apply_knockback(knockback_direction, 120.0)
+		body.hit_stop_effect()
+		
+		var impact = preload("res://effects/projectile_impact.tscn").instantiate()
+		impact.global_position = global_position
+		get_parent().add_child(impact)
+		
 		queue_free()
-
 
 func _on_lifetime_timer_timeout() -> void:
 	queue_free()
