@@ -12,6 +12,7 @@ var max_health = 3
 var health = max_health
 var is_dead = false
 var is_invincible = false
+var is_shooting = false
 
 var last_direction = Vector2.RIGHT
 var facing_direction = Vector2.DOWN
@@ -28,50 +29,50 @@ func _physics_process(delta):
 	"move_up",
 	"move_down")
 	
-	if direction != Vector2.ZERO:
-		last_direction = direction
+	if not is_shooting:
+		if direction != Vector2.ZERO:
+			last_direction = direction
 	
-		# Tentukan arah hadap berdasarkan gerakan
-		if abs(direction.x) > abs(direction.y):
-			if direction.x > 0:
-				facing_direction = Vector2.RIGHT
+			# Tentukan arah hadap berdasarkan gerakan
+			if abs(direction.x) > abs(direction.y):
+				if direction.x > 0:
+					facing_direction = Vector2.RIGHT
+				else:
+					facing_direction = Vector2.LEFT
 			else:
-				facing_direction = Vector2.LEFT
+				if direction.y > 0:
+					facing_direction = Vector2.DOWN
+				else:
+					facing_direction = Vector2.UP
+			
+			# Mainkan animasi walk sesuai arah
+			if facing_direction == Vector2.UP:
+				if $PlayerAnimation.animation != "walk_up":
+					$PlayerAnimation.play("walk_up")
+			elif facing_direction == Vector2.DOWN:
+				if $PlayerAnimation.animation != "walk_down":
+					$PlayerAnimation.play("walk_down")
+			elif facing_direction == Vector2.LEFT:
+				if $PlayerAnimation.animation != "walk_left":
+					$PlayerAnimation.play("walk_left")
+			elif facing_direction == Vector2.RIGHT:
+				if $PlayerAnimation.animation != "walk_right":
+					$PlayerAnimation.play("walk_right")
 		else:
-			if direction.y > 0:
-				facing_direction = Vector2.DOWN
-			else:
-				facing_direction = Vector2.UP
-		
-		# Mainkan animasi walk sesuai arah
-		if facing_direction == Vector2.UP:
-			if $PlayerAnimation.animation != "walk_up":
-				$PlayerAnimation.play("walk_up")
-		elif facing_direction == Vector2.DOWN:
-			if $PlayerAnimation.animation != "walk_down":
-				$PlayerAnimation.play("walk_down")
-		elif facing_direction == Vector2.LEFT:
-			if $PlayerAnimation.animation != "walk_left":
-				$PlayerAnimation.play("walk_left")
-		elif facing_direction == Vector2.RIGHT:
-			if $PlayerAnimation.animation != "walk_right":
-				$PlayerAnimation.play("walk_right")
-
-	else:
-		# Mainkan animasi idle sesuai arah terakhir
-		if facing_direction == Vector2.UP:
-			if $PlayerAnimation.animation != "idle_up":
-				$PlayerAnimation.play("idle_up")
-		elif facing_direction == Vector2.DOWN:
-			if $PlayerAnimation.animation != "idle_down":
-				$PlayerAnimation.play("idle_down")
-		elif facing_direction == Vector2.LEFT:
-			if $PlayerAnimation.animation != "idle_left":
-				$PlayerAnimation.play("idle_left")
-		elif facing_direction == Vector2.RIGHT:
-			if $PlayerAnimation.animation != "idle_right":
-				$PlayerAnimation.play("idle_right")
-		
+	   		# Mainkan animasi idle sesuai arah terakhir
+			if facing_direction == Vector2.UP:
+				if $PlayerAnimation.animation != "idle_up":
+					$PlayerAnimation.play("idle_up")
+			elif facing_direction == Vector2.DOWN:
+				if $PlayerAnimation.animation != "idle_down":
+					$PlayerAnimation.play("idle_down")
+			elif facing_direction == Vector2.LEFT:
+				if $PlayerAnimation.animation != "idle_left":
+					$PlayerAnimation.play("idle_left")
+			elif facing_direction == Vector2.RIGHT:
+				if $PlayerAnimation.animation != "idle_right":
+					$PlayerAnimation.play("idle_right")
+					
 	velocity = direction * speed
 		
 	move_and_slide()
@@ -136,6 +137,21 @@ func shoot():
 	if not $ShootCooldownTimer.is_stopped():
 		return
 	
+	is_shooting = true
+	play_shoot_animation()
+	
+	if facing_direction == Vector2.RIGHT:
+		$MuzzlePoint.position = Vector2(25, 0)
+
+	elif facing_direction == Vector2.LEFT:
+		$MuzzlePoint.position = Vector2(-25, 0)
+
+	elif facing_direction == Vector2.UP:
+		$MuzzlePoint.position = Vector2(0, -25)
+
+	elif facing_direction == Vector2.DOWN:
+		$MuzzlePoint.position = Vector2(0, 25)
+	
 	$MuzzleFlash.position = facing_direction * 25.0
 	$MuzzleFlash.visible = true
 	
@@ -146,7 +162,7 @@ func shoot():
 	
 	var projectile = projectile_scene.instantiate()
 
-	projectile.global_position = global_position
+	projectile.global_position = $MuzzlePoint.global_position
 	projectile.direction = last_direction
 	
 	get_parent().add_child(projectile)
@@ -156,6 +172,8 @@ func shoot():
 	await get_tree().create_timer(0.06).timeout
 	$MuzzleFlash.visible = false
 	
+	await get_tree().create_timer(0.04).timeout
+	is_shooting = false
 func blink():
 	if is_invincible:
 		modulate.a = 0.3
@@ -244,3 +262,13 @@ func shoot_recoil():
 		position,
 		0.06
 	)
+
+func play_shoot_animation():
+	if facing_direction == Vector2.UP:
+		$PlayerAnimation.play("shoot_up")
+	elif facing_direction == Vector2.DOWN:
+		$PlayerAnimation.play("shoot_down")
+	elif facing_direction == Vector2.LEFT:
+		$PlayerAnimation.play("shoot_left")
+	elif facing_direction == Vector2.RIGHT:
+		$PlayerAnimation.play("shoot_right")

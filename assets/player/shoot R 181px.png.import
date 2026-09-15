@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkiqpsqnpyc1m"
-path="res://.godot/imported/player_sprite_sheet_cleaned.png-bcff690429dda9c8ca2dc3e56e29cce5.ctex"
+uid="uid://ce8gd12xe2hfc"
+path="res://.godot/imported/shoot R 181px.png-b595493c60ecc0e52e9c6cae48e33d94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/player_sprite_sheet_cleaned.png"
-dest_files=["res://.godot/imported/player_sprite_sheet_cleaned.png-bcff690429dda9c8ca2dc3e56e29cce5.ctex"]
+source_file="res://assets/player/shoot R 181px.png"
+dest_files=["res://.godot/imported/shoot R 181px.png-b595493c60ecc0e52e9c6cae48e33d94.ctex"]
 
 [params]
 

@@ -5,7 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://cgfdfhdsedava" path="res://scenes/Projectile.tscn" id="2_mdl7e"]
 [ext_resource type="AudioStream" uid="uid://cdshy3rg6prdj" path="res://assets/audio/shoot.wav" id="4_mdl7e"]
 [ext_resource type="Texture2D" uid="uid://cb3ffwlq8pty0" path="res://assets/player/player_4_direction_centered.png" id="5_qu4a1"]
+[ext_resource type="Texture2D" uid="uid://dce23fanf51q3" path="res://assets/player/shoot down 181px.png" id="6_6eyey"]
 [ext_resource type="Texture2D" uid="uid://dk1mn0a3mepmb" path="res://assets/Glow.png" id="6_70d11"]
+[ext_resource type="Texture2D" uid="uid://cgyh6x6jed8us" path="res://assets/player/shoot L 181px.png" id="7_6eyey"]
+[ext_resource type="Texture2D" uid="uid://ce8gd12xe2hfc" path="res://assets/player/shoot R 181px.png" id="8_d3wef"]
+[ext_resource type="Texture2D" uid="uid://d1fkukcuyjbvf" path="res://assets/player/shoot Up 181px.png" id="9_o4126"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70d11"]
 atlas = ExtResource("5_qu4a1")
@@ -253,6 +257,38 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_6eyey")
+}],
+"loop": 2,
+"name": &"shoot_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_6eyey")
+}],
+"loop": 2,
+"name": &"shoot_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_d3wef")
+}],
+"loop": 2,
+"name": &"shoot_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_o4126")
+}],
+"loop": 2,
+"name": &"shoot_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_p07f3")
 }, {
 "duration": 1.0,
@@ -361,10 +397,8 @@ texture = ExtResource("2_3li8b")
 
 [node name="PlayerAnimation" type="AnimatedSprite2D" parent="." unique_id=579274635]
 sprite_frames = SubResource("SpriteFrames_4f3oj")
-animation = &"walk_right"
+animation = &"shoot_up"
 autoplay = "idle_down"
-frame = 5
-frame_progress = 0.6788631
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1022426299]
 position = Vector2(0, -1)
@@ -393,6 +427,9 @@ visible = false
 position = Vector2(25, 0)
 scale = Vector2(0.03, 0.03)
 texture = ExtResource("6_70d11")
+
+[node name="MuzzlePoint" type="Marker2D" parent="." unique_id=219153043]
+position = Vector2(25, 0)
 
 [connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
