@@ -10,6 +10,7 @@ extends Node2D
 @onready var game_over_label = $UI/GameOverContainer/GameOverBox/GameOverLabel
 @onready var enemy_spawner = $EnemySpawner
 @onready var wave_label = $UI/WaveLabel
+@onready var main_menu_button = $UI/GameOverContainer/GameOverBox/MainMenuButton
 
 @onready var audio_settings = $UI/AudioSettings
 @onready var music_button = $UI/AudioSettings/VBoxContainer/MusicButton
@@ -28,6 +29,7 @@ func _ready():
 	
 	game_over_label.visible = false
 	restart_button.visible = false
+	main_menu_button.visible = false
 	
 	update_health(player.health)
 	update_score()
@@ -82,6 +84,7 @@ func show_game_over():
 	game_over_label.text = "GAME OVER\nSCORE: " + str(score)
 	game_over_label.visible = true
 	restart_button.visible = true
+	main_menu_button.visible = true
 	
 	$BGM.stop()
 	
@@ -108,3 +111,7 @@ func toggle_sfx(enabled: bool):
 		music_button.button_pressed,
 		enabled
 	)
+
+
+func _on_main_menu_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
