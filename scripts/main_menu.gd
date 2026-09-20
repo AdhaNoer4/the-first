@@ -9,6 +9,8 @@ extends Control
 @onready var sfx_button = $AudioSettings/VBoxContainer/SFXButton
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	animate_title()
+	
 	var audio_settings_data = AudioManager.load_audio_settings()
 	
 	music_button.button_pressed = audio_settings_data["music_enabled"]
@@ -54,3 +56,35 @@ func toggle_sfx(enabled: bool):
 		music_button.button_pressed,
 		enabled
 	)
+
+func button_hover(button: Button):
+	var tween = create_tween()
+	tween.tween_property(button, "scale", Vector2(1.05, 1.05), 0.1)
+
+func button_exit(button: Button):
+	var tween = create_tween()
+	tween.tween_property(button, "scale", Vector2.ONE, 0.1)
+
+func _on_play_button_mouse_entered() -> void:
+	button_hover($PlayButton)
+
+func _on_play_button_mouse_exited() -> void:
+	button_exit($PlayButton)
+
+func _on_settings_button_mouse_entered() -> void:
+	button_hover($SettingsButton)
+
+func _on_settings_button_mouse_exited() -> void:
+	button_exit($SettingsButton)
+
+func _on_exit_button_mouse_entered() -> void:
+	button_hover($ExitButton)
+func _on_exit_button_mouse_exited() -> void:
+	button_exit($ExitButton)
+
+func animate_title():
+	var tween = create_tween()
+	tween.set_loops()
+
+	tween.tween_property($Title, "scale", Vector2(1.05, 1.05), 1.0)
+	tween.tween_property($Title, "scale", Vector2.ONE, 1.0)

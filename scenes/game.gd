@@ -94,6 +94,7 @@ func show_game_over():
 	restart_button.visible = true
 	main_menu_button.visible = true
 	
+	animate_game_over()
 	$BGM.stop()
 	
 	AudioManager.play_sound(game_over_sound)
@@ -131,6 +132,7 @@ func toggle_pause():
 func pause_game():
 	is_paused = true
 	pause_container.visible = true
+	animate_pause_menu()
 	get_tree().paused = true
 	
 func resume_game():
@@ -153,3 +155,23 @@ func _on_pause_main_menu_pressed() -> void:
 	get_tree().paused = false
 	is_paused = false
 	SceneTransition.fade_to_scene("res://scenes/main_menu.tscn")
+
+func animate_pause_menu():
+	var pause_box = $UI/PauseContainer/CenterContainer/PauseBox
+	
+	pause_box.scale = Vector2(0.7, 0.7)
+	
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(pause_box, "scale", Vector2.ONE, 0.3)
+
+func animate_game_over():
+	var game_over_box = $UI/GameOverContainer/GameOverBox
+	
+	game_over_box.scale = Vector2(0.6, 0.6)
+	
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(game_over_box, "scale", Vector2.ONE, 0.4)
