@@ -15,21 +15,30 @@ extends Node2D
 @onready var audio_settings = $UI/AudioSettings
 @onready var music_button = $UI/AudioSettings/VBoxContainer/MusicButton
 @onready var sfx_button = $UI/AudioSettings/VBoxContainer/SFXButton
-@onready var audio_settings_button = $UI/AudioSettingsButton
 @onready var close_button = $UI/AudioSettings/VBoxContainer/CloseButton
+@onready var pause_container = $UI/PauseContainer
+@onready var pause_settings_button = $UI/PauseContainer/CenterContainer/PauseBox/PauseSettingsButton
+@onready var pause_main_menu_button = $UI/PauseContainer/CenterContainer/PauseBox/PauseMainMenuButton
 
 var score = 0
 var wave = 1
+var is_paused = false
 
 func _ready():
 	player.health_changed.connect(update_health)
 	player.player_died.connect(show_game_over)
 	restart_button.pressed.connect(restart_game)
 	$WaveTimer.timeout.connect(next_wave)
+	pause_settings_button.pressed.connect(open_pause_settings)
+	pause_main_menu_button.pressed.connect(_on_pause_main_menu_pressed)
 	
 	game_over_label.visible = false
 	restart_button.visible = false
 	main_menu_button.visible = false
+	
+	pause_container.visible = false
+	is_paused = false
+	get_tree().paused = false
 	
 	update_health(player.health)
 	update_score()
@@ -38,7 +47,6 @@ func _ready():
 	print("WAVE:", wave)
 	print(AudioManager)
 	
-	audio_settings_button.pressed.connect(open_audio_settings)
 	close_button.pressed.connect(close_audio_settings)
 	music_button.toggled.connect(toggle_music)
 	sfx_button.toggled.connect(toggle_sfx)
@@ -90,12 +98,11 @@ func show_game_over():
 	
 	AudioManager.play_sound(game_over_sound)
 
-func open_audio_settings():
-	audio_settings.visible = true
-
 func close_audio_settings():
 	audio_settings.visible = false
-
+	if is_paused:
+		pause_container.visible = true
+		
 func toggle_music(enabled: bool):
 	AudioManager.set_music_enabled(enabled)
 	
@@ -112,6 +119,37 @@ func toggle_sfx(enabled: bool):
 		enabled
 	)
 
-
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	SceneTransition.fade_to_scene("res://scenes/main_menu.tscn")
+
+func toggle_pause():
+	if is_paused:
+		resume_game()
+	else:
+		pause_game()
+		
+func pause_game():
+	is_paused = true
+	pause_container.visible = true
+	get_tree().paused = true
+	
+func resume_game():
+	is_paused = false
+	pause_container.visible = false
+	get_tree().paused = false
+
+func _on_resume_button_pressed() -> void:
+	resume_game()
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel"):
+		toggle_pause()
+
+func open_pause_settings():
+	pause_container.visible = false
+	audio_settings.visible = true
+
+func _on_pause_main_menu_pressed() -> void:
+	get_tree().paused = false
+	is_paused = false
+	SceneTransition.fade_to_scene("res://scenes/main_menu.tscn")

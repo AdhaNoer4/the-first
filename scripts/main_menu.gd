@@ -1,15 +1,56 @@
 extends Control
 
+@export var button_click_sound: AudioStream
 
+@onready var bgm = $BGM
+@onready var audio_settings = $AudioSettings
+@onready var close_button = $AudioSettings/VBoxContainer/CloseButton
+@onready var music_button = $AudioSettings/VBoxContainer/MusicButton
+@onready var sfx_button = $AudioSettings/VBoxContainer/SFXButton
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
+	var audio_settings_data = AudioManager.load_audio_settings()
+	
+	music_button.button_pressed = audio_settings_data["music_enabled"]
+	sfx_button.button_pressed = audio_settings_data["sfx_enabled"]
+	
+	close_button.pressed.connect(close_audio_settings)
+	music_button.toggled.connect(toggle_music)
+	sfx_button.toggled.connect(toggle_sfx)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func _on_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/Game.tscn")
+	play_button_sound()
+	SceneTransition.fade_to_scene("res://scenes/game.tscn")
    
+func play_button_sound():
+	AudioManager.play_sound(button_click_sound)
+
+func _on_settings_button_pressed() -> void:
+	play_button_sound()
+	audio_settings.visible = true
+
+func _on_exit_button_pressed() -> void:
+	play_button_sound()
+	await get_tree().create_timer(0.15).timeout
+	get_tree().quit()
+
+func close_audio_settings():
+	play_button_sound()
+	audio_settings.visible = false
+
+func toggle_music(enabled: bool):
+	AudioManager.set_music_enabled(enabled)
+	AudioManager.save_audio_settings(
+		enabled,
+		sfx_button.button_pressed
+	)
+
+func toggle_sfx(enabled: bool):
+	AudioManager.set_sfx_enabled(enabled)
+	AudioManager.save_audio_settings(
+		music_button.button_pressed,
+		enabled
+	)

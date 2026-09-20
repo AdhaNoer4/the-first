@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bubwd6sco1ut3"]
 
 [ext_resource type="Script" uid="uid://dsvj54ws7gvty" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="AudioStream" uid="uid://cg8lhnj0hvbkv" path="res://assets/audio/sfx/button_click.wav" id="2_bqqt6"]
+[ext_resource type="AudioStream" uid="uid://kioa3124w300" path="res://assets/audio/The_Keeper’s_Last_Vigil.mp3" id="2_ekxnf"]
 
 [node name="MainMenu" type="Control" unique_id=591020336]
 layout_mode = 3
@@ -10,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
+button_click_sound = ExtResource("2_bqqt6")
 
 [node name="Background" type="ColorRect" parent="." unique_id=726775045]
 layout_mode = 1
@@ -18,17 +21,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.23921569, 0.52156866, 0.5686275, 1)
 
 [node name="Title" type="Label" parent="." unique_id=213357019]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -38.0
-offset_right = 38.0
-offset_bottom = 23.0
+anchors_preset = -1
+anchor_left = 0.50100005
+anchor_top = 0.4
+anchor_right = 0.50100005
+anchor_bottom = 0.4
+offset_left = -83.15204
+offset_top = -24.200012
+offset_right = 82.84796
+offset_bottom = 24.799988
 grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
 text = "THE FIRST"
 
 [node name="PlayButton" type="Button" parent="." unique_id=1985887520]
@@ -76,4 +84,50 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "EXIT"
 
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=477674431]
+stream = ExtResource("2_ekxnf")
+volume_db = -10.0
+autoplay = true
+bus = &"BGM"
+
+[node name="AudioSettings" type="PanelContainer" parent="." unique_id=965087210]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -151.0
+offset_top = -74.0
+offset_right = 149.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AudioSettings" unique_id=1227681458]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TitleLabel" type="Label" parent="AudioSettings/VBoxContainer" unique_id=1520112469]
+layout_mode = 2
+text = "AUDIO SETTINGS"
+horizontal_alignment = 1
+
+[node name="MusicButton" type="CheckButton" parent="AudioSettings/VBoxContainer" unique_id=1240758493]
+layout_mode = 2
+button_pressed = true
+text = "Music"
+
+[node name="SFXButton" type="CheckButton" parent="AudioSettings/VBoxContainer" unique_id=1438880001]
+layout_mode = 2
+button_pressed = true
+text = "SFX"
+
+[node name="CloseButton" type="Button" parent="AudioSettings/VBoxContainer" unique_id=330441081]
+layout_mode = 2
+text = "CLOSE"
+
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
