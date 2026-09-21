@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cgyh6x6jed8us" path="res://assets/player/shoot L 181px.png" id="7_6eyey"]
 [ext_resource type="Texture2D" uid="uid://ce8gd12xe2hfc" path="res://assets/player/shoot R 181px.png" id="8_d3wef"]
 [ext_resource type="Texture2D" uid="uid://d1fkukcuyjbvf" path="res://assets/player/shoot Up 181px.png" id="9_o4126"]
+[ext_resource type="Script" uid="uid://v5pkc6ywyq6h" path="res://scripts/weapon.gd" id="11_d3wef"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70d11"]
 atlas = ExtResource("5_qu4a1")
@@ -416,10 +417,6 @@ one_shot = true
 [node name="BlinkTimer" type="Timer" parent="." unique_id=819970316]
 wait_time = 0.1
 
-[node name="ShootCooldownTimer" type="Timer" parent="." unique_id=1046238447]
-wait_time = 0.25
-one_shot = true
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1314370481]
 
 [node name="MuzzleFlash" type="Sprite2D" parent="." unique_id=164794718]
@@ -429,7 +426,17 @@ scale = Vector2(0.03, 0.03)
 texture = ExtResource("6_70d11")
 
 [node name="MuzzlePoint" type="Marker2D" parent="." unique_id=219153043]
-position = Vector2(25, 0)
+position = Vector2(3, 2)
+
+[node name="Weapon" type="Node2D" parent="." unique_id=1474838908]
+script = ExtResource("11_d3wef")
+fire_rate = 0.1
+projectile_scene = ExtResource("2_mdl7e")
+shoot_sound = ExtResource("4_mdl7e")
+
+[node name="WeaponCooldownTimer" type="Timer" parent="Weapon" unique_id=991417971]
+wait_time = 0.3
+one_shot = true
 
 [connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

@@ -17,6 +17,8 @@ var is_shooting = false
 var last_direction = Vector2.RIGHT
 var facing_direction = Vector2.DOWN
 
+@onready var weapon = $Weapon
+
 func _ready():
 	pass
 
@@ -125,55 +127,13 @@ func _on_invincibility_timer_timeout() -> void:
 
 func _input(event):
 	if event.is_action_pressed("shoot"):
-		shoot()
+		weapon.shoot()
 		#var enemies = get_tree().get_nodes_in_group("enemy")
 #
 		#for enemy in enemies:
 			#enemy.take_damage(1)
 	
-func shoot():
-	if is_dead:
-		return
-	if not $ShootCooldownTimer.is_stopped():
-		return
-	
-	is_shooting = true
-	play_shoot_animation()
-	
-	if facing_direction == Vector2.RIGHT:
-		$MuzzlePoint.position = Vector2(25, 0)
 
-	elif facing_direction == Vector2.LEFT:
-		$MuzzlePoint.position = Vector2(-25, 0)
-
-	elif facing_direction == Vector2.UP:
-		$MuzzlePoint.position = Vector2(0, -25)
-
-	elif facing_direction == Vector2.DOWN:
-		$MuzzlePoint.position = Vector2(0, 25)
-	
-	$MuzzleFlash.position = facing_direction * 25.0
-	$MuzzleFlash.visible = true
-	
-	shoot_recoil()
-
-		
-	AudioManager.play_sound(shoot_sound)
-	
-	var projectile = projectile_scene.instantiate()
-
-	projectile.global_position = $MuzzlePoint.global_position
-	projectile.direction = last_direction
-	
-	get_parent().add_child(projectile)
-	
-	$ShootCooldownTimer.start()
-	
-	await get_tree().create_timer(0.06).timeout
-	$MuzzleFlash.visible = false
-	
-	await get_tree().create_timer(0.04).timeout
-	is_shooting = false
 func blink():
 	if is_invincible:
 		modulate.a = 0.3
