@@ -5,7 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://bhwmhnhg017hy" path="res://scenes/speed_power_up.tscn" id="2_kiw3p"]
 [ext_resource type="PackedScene" uid="uid://cjgdywg1pdxly" path="res://scenes/Enemy.tscn" id="2_qbsmt"]
 [ext_resource type="AudioStream" uid="uid://kcohekv4cxj8" path="res://assets/audio/game_over.wav" id="3_400sg"]
+[ext_resource type="Texture2D" uid="uid://c01fb757b44ta" path="res://assets/weapon/Shotgun.png" id="4_3xj3m"]
 [ext_resource type="Script" uid="uid://cldjlr0iak7sl" path="res://scenes/enemy_spawner.gd" id="4_78awf"]
+[ext_resource type="Texture2D" uid="uid://b1myr4bdfdccq" path="res://assets/weapon/HG.png" id="4_qy1jj"]
 [ext_resource type="Script" uid="uid://dhmooyd7a1pd4" path="res://scenes/power_up_spawner.gd" id="5_s0nni"]
 [ext_resource type="PackedScene" uid="uid://cnyk8jucx8vd8" path="res://scenes/health_power_up.tscn" id="6_aug50"]
 [ext_resource type="AudioStream" uid="uid://qaxo7gdgp17n" path="res://assets/audio/Knotted_Branch_and_Bone.mp3" id="9_g4kob"]
@@ -25,6 +27,8 @@ size = Vector2(500, 20)
 [node name="Game" type="Node2D" unique_id=440709642]
 script = ExtResource("1_78awf")
 game_over_sound = ExtResource("3_400sg")
+pistol_texture = ExtResource("4_qy1jj")
+shotgun_texture = ExtResource("4_3xj3m")
 
 [node name="Player" parent="." unique_id=1373821281 instance=ExtResource("1_ibkli")]
 position = Vector2(555, 388)
@@ -220,6 +224,33 @@ text = "SETTINGS"
 [node name="PauseMainMenuButton" type="Button" parent="UI/PauseContainer/CenterContainer/PauseBox" unique_id=839178501]
 layout_mode = 2
 text = "MAIN MENU"
+
+[node name="WeaponLabel" type="Label" parent="UI" unique_id=1760636377]
+anchors_preset = -1
+anchor_left = 0.022000002
+anchor_top = 0.106000006
+anchor_right = 0.022000002
+anchor_bottom = 0.106000006
+offset_left = -0.34400177
+offset_top = 0.31199646
+offset_right = 39.656
+offset_bottom = 23.311996
+text = "Weapon: PISTOL"
+
+[node name="WeaponIcon" type="TextureRect" parent="UI" unique_id=1853321139]
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = -1
+anchor_left = 0.022000002
+anchor_top = 0.128
+anchor_right = 0.022000002
+anchor_bottom = 0.128
+offset_left = -0.34400368
+offset_top = 0.055999756
+offset_right = 1535.656
+offset_bottom = 1024.056
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("4_qy1jj")
+stretch_mode = 5
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=1856192007]
 script = ExtResource("4_78awf")

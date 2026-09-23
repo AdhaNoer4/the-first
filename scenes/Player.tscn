@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bhmth23ygwu21" path="res://scenes/player.gd" id="1_v6fml"]
 [ext_resource type="Texture2D" uid="uid://bgoolbgfbse17" path="res://icon.svg" id="2_3li8b"]
+[ext_resource type="Resource" uid="uid://qwoshb7ktkng" path="res://resources/pistol_data.tres" id="2_lkdrv"]
 [ext_resource type="PackedScene" uid="uid://cgfdfhdsedava" path="res://scenes/Projectile.tscn" id="2_mdl7e"]
 [ext_resource type="AudioStream" uid="uid://cdshy3rg6prdj" path="res://assets/audio/shoot.wav" id="4_mdl7e"]
 [ext_resource type="Texture2D" uid="uid://cb3ffwlq8pty0" path="res://assets/player/player_4_direction_centered.png" id="5_qu4a1"]
@@ -11,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ce8gd12xe2hfc" path="res://assets/player/shoot R 181px.png" id="8_d3wef"]
 [ext_resource type="Texture2D" uid="uid://d1fkukcuyjbvf" path="res://assets/player/shoot Up 181px.png" id="9_o4126"]
 [ext_resource type="Script" uid="uid://v5pkc6ywyq6h" path="res://scripts/weapon.gd" id="11_d3wef"]
+[ext_resource type="Resource" uid="uid://bmicdqa0hp4da" path="res://resources/shotgun_data.tres" id="12_o4126"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70d11"]
 atlas = ExtResource("5_qu4a1")
@@ -389,6 +391,8 @@ radius = 70.06
 
 [node name="Player" type="CharacterBody2D" unique_id=1373821281 groups=["player"]]
 script = ExtResource("1_v6fml")
+pistol_data = ExtResource("2_lkdrv")
+shotgun_data = ExtResource("12_o4126")
 projectile_scene = ExtResource("2_mdl7e")
 shoot_sound = ExtResource("4_mdl7e")
 
@@ -430,7 +434,7 @@ position = Vector2(3, 2)
 
 [node name="Weapon" type="Node2D" parent="." unique_id=1474838908]
 script = ExtResource("11_d3wef")
-fire_rate = 0.1
+weapon_data = ExtResource("2_lkdrv")
 projectile_scene = ExtResource("2_mdl7e")
 shoot_sound = ExtResource("4_mdl7e")
 

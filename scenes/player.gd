@@ -2,7 +2,10 @@ extends CharacterBody2D
 
 signal health_changed
 signal player_died
+signal weapon_changed
 
+@export var pistol_data: WeaponData
+@export var shotgun_data: WeaponData
 @export var projectile_scene: PackedScene
 @export var shoot_sound: AudioStream
 @export var speed = 200.0
@@ -60,6 +63,7 @@ func _physics_process(delta):
 			elif facing_direction == Vector2.RIGHT:
 				if $PlayerAnimation.animation != "walk_right":
 					$PlayerAnimation.play("walk_right")
+			
 		else:
 	   		# Mainkan animasi idle sesuai arah terakhir
 			if facing_direction == Vector2.UP:
@@ -128,10 +132,13 @@ func _on_invincibility_timer_timeout() -> void:
 func _input(event):
 	if event.is_action_pressed("shoot"):
 		weapon.shoot()
-		#var enemies = get_tree().get_nodes_in_group("enemy")
-#
-		#for enemy in enemies:
-			#enemy.take_damage(1)
+		
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_1:
+			switch_weapon(pistol_data)
+
+		elif event.keycode == KEY_2:
+			switch_weapon(shotgun_data)
 	
 
 func blink():
@@ -232,3 +239,7 @@ func play_shoot_animation():
 		$PlayerAnimation.play("shoot_left")
 	elif facing_direction == Vector2.RIGHT:
 		$PlayerAnimation.play("shoot_right")
+
+func switch_weapon(weapon_data: WeaponData):
+	weapon.equip_weapon(weapon_data)
+	weapon_changed.emit()

@@ -1,19 +1,22 @@
 extends Node2D
 
-@export var damage = 1
-@export var fire_rate = 0.3
-@export var projectile_speed = 500.0
-@export var pellets = 1
-@export var spread = 0.0
+@export var weapon_data: WeaponData
 @export var projectile_scene: PackedScene
 @export var shoot_sound: AudioStream
+
 
 @onready var player = get_parent()
 @onready var muzzle_point = player.get_node("MuzzlePoint")
 @onready var muzzle_flash = player.get_node("MuzzleFlash")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$WeaponCooldownTimer.wait_time = fire_rate
+	$WeaponCooldownTimer.wait_time = weapon_data.fire_rate
+
+func equip_weapon(new_weapon_data: WeaponData):
+	weapon_data = new_weapon_data
+	$WeaponCooldownTimer.wait_time = weapon_data.fire_rate
+	
+	print("Weapon equipped:", weapon_data.weapon_name)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -34,15 +37,25 @@ func shoot():
 	
 	player.shoot_recoil()
 	
-	var projectile = projectile_scene.instantiate()
+	for i in weapon_data.pellets:
+		var projectile = projectile_scene.instantiate()
 
-	projectile.global_position = muzzle_point.global_position
-	projectile.direction = player.last_direction
-	
-	projectile.damage = damage
-	projectile.speed = projectile_speed
+		projectile.global_position = muzzle_point.global_position
 
-	player.get_parent().add_child(projectile)
+		var spread_angle = randf_range(
+			-weapon_data.spread / 2.0,
+			weapon_data.spread / 2.0
+		)
+
+		projectile.direction = player.last_direction.rotated(
+			deg_to_rad(spread_angle)
+		).normalized()
+
+		projectile.damage = weapon_data.damage
+		projectile.speed = weapon_data.projectile_speed
+
+		player.get_parent().add_child(projectile)
+		
 	$WeaponCooldownTimer.start()
 	
 	await get_tree().create_timer(0.06).timeout

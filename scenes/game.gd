@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var game_over_sound: AudioStream
+@export var pistol_texture: Texture2D
+@export var shotgun_texture: Texture2D
 
 @onready var player = $Player
 @onready var health_label = $UI/HealthLabel
@@ -11,6 +13,8 @@ extends Node2D
 @onready var enemy_spawner = $EnemySpawner
 @onready var wave_label = $UI/WaveLabel
 @onready var main_menu_button = $UI/GameOverContainer/GameOverBox/MainMenuButton
+@onready var weapon_label = $UI/WeaponLabel
+@onready var weapon_icon = $UI/WeaponIcon
 
 @onready var audio_settings = $UI/AudioSettings
 @onready var music_button = $UI/AudioSettings/VBoxContainer/MusicButton
@@ -43,6 +47,7 @@ func _ready():
 	update_health(player.health)
 	update_score()
 	update_wave()
+	update_weapon_label()
 	
 	print("WAVE:", wave)
 	print(AudioManager)
@@ -50,6 +55,11 @@ func _ready():
 	close_button.pressed.connect(close_audio_settings)
 	music_button.toggled.connect(toggle_music)
 	sfx_button.toggled.connect(toggle_sfx)
+	player.weapon_changed.connect(update_weapon_label)
+	player.weapon_changed.connect(update_weapon_display)
+	
+	update_weapon_display()
+	update_weapon_label()
 	
 	audio_settings.visible = false
 	
@@ -175,3 +185,14 @@ func animate_game_over():
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(game_over_box, "scale", Vector2.ONE, 0.4)
+
+func update_weapon_label():
+	weapon_label.text = "Weapon: " + player.weapon.weapon_data.weapon_name
+
+func update_weapon_display():
+	var current_weapon = player.weapon.weapon_data.weapon_name
+
+	if current_weapon == "Pistol":
+		weapon_icon.texture = pistol_texture
+	elif current_weapon == "Shotgun":
+		weapon_icon.texture = shotgun_texture
