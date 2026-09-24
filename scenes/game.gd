@@ -15,6 +15,8 @@ extends Node2D
 @onready var main_menu_button = $UI/GameOverContainer/GameOverBox/MainMenuButton
 @onready var weapon_label = $UI/WeaponLabel
 @onready var weapon_icon = $UI/WeaponIcon
+@onready var pistol_slot = $UI/WeaponSlotPistol
+@onready var shotgun_slot = $UI/WeaponSlotShotgun
 
 @onready var audio_settings = $UI/AudioSettings
 @onready var music_button = $UI/AudioSettings/VBoxContainer/MusicButton
@@ -27,14 +29,23 @@ extends Node2D
 var score = 0
 var wave = 1
 var is_paused = false
+var weapon_icon_original_scale: Vector2
+var weapon_slot_tweens = {}
+var weapon_slot_original_scales = {}
 
 func _ready():
+	weapon_icon_original_scale = weapon_icon.scale
+	weapon_slot_original_scales[pistol_slot] = pistol_slot.scale
+	weapon_slot_original_scales[shotgun_slot] = shotgun_slot.scale
+	
 	player.health_changed.connect(update_health)
 	player.player_died.connect(show_game_over)
 	restart_button.pressed.connect(restart_game)
 	$WaveTimer.timeout.connect(next_wave)
 	pause_settings_button.pressed.connect(open_pause_settings)
 	pause_main_menu_button.pressed.connect(_on_pause_main_menu_pressed)
+	player.weapon_changed.connect(animate_weapon_icon)
+	player.weapon_changed.connect(update_weapon_slots)
 	
 	game_over_label.visible = false
 	restart_button.visible = false
@@ -48,6 +59,7 @@ func _ready():
 	update_score()
 	update_wave()
 	update_weapon_label()
+	update_weapon_slots()
 	
 	print("WAVE:", wave)
 	print(AudioManager)
@@ -196,3 +208,51 @@ func update_weapon_display():
 		weapon_icon.texture = pistol_texture
 	elif current_weapon == "Shotgun":
 		weapon_icon.texture = shotgun_texture
+
+func animate_weapon_icon():
+	var tween = create_tween()
+	
+	weapon_icon.scale = weapon_icon_original_scale * 1.2
+	
+	tween.tween_property(
+		weapon_icon,
+		"scale",
+		weapon_icon_original_scale,
+		0.15
+	)
+
+func update_weapon_slots():
+	var current_weapon = player.weapon.weapon_data.weapon_name
+	
+	if current_weapon == "Pistol":
+		pistol_slot.modulate = Color(1, 1, 1, 1)
+		shotgun_slot.modulate = Color(0.5, 0.5, 0.5, 1)
+		animate_weapon_slot(pistol_slot)
+		
+	elif current_weapon == "Shotgun":
+		pistol_slot.modulate = Color(0.5, 0.5, 0.5, 1)
+		shotgun_slot.modulate = Color(1, 1, 1, 1)
+		animate_weapon_slot(shotgun_slot)
+		
+func animate_weapon_slot(slot: Control):
+	if weapon_slot_tweens.has(slot):
+		weapon_slot_tweens[slot].kill()
+	
+	var original_scale = weapon_slot_original_scales[slot]
+	
+	slot.scale = original_scale * 1.1
+	
+	var tween = create_tween()
+	weapon_slot_tweens[slot] = tween
+	
+	tween.tween_property(
+		slot,
+		"scale",
+		original_scale,
+		0.15
+	)
+	
+	await tween.finished
+	
+	if weapon_slot_tweens.get(slot) == tween:
+		weapon_slot_tweens.erase(slot)

@@ -241,5 +241,13 @@ func play_shoot_animation():
 		$PlayerAnimation.play("shoot_right")
 
 func switch_weapon(weapon_data: WeaponData):
+	if is_shooting:
+		return
+	if weapon.weapon_data == weapon_data:
+		return
+	
 	weapon.equip_weapon(weapon_data)
 	weapon_changed.emit()
+
+func is_weapon_equipped(target_weapon: WeaponData) -> bool:
+	return weapon.weapon_data == target_weapon
